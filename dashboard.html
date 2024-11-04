@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <div class="min-h-screen bg-gray-100">
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-900">Course Registration System</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="dropdown">
+                        <button class="btn btn-ghost" id="notificationBtn">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge" id="notificationBadge">2</span>
+                        </button>
+                        <div class="dropdown-content" id="notificationDropdown">
+                            <h3>Notifications</h3>
+                            <hr>
+                            <a href="#" class="notification-item">New course available: Machine Learning</a>
+                            <a href="#" class="notification-item">Reminder: Complete course evaluation</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-ghost flex items-center space-x-2" id="userMenuBtn">
+                            <div class="avatar">
+                                <img src="https://plus.unsplash.com/premium_vector-1682269282372-6d888f3451f1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww" alt="John Doe" id="userAvatar">
+                            </div>
+                            <span id="userName">John Doe</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content" id="userDropdown">
+                            <h3>My Account</h3>
+                            <hr>
+                            <a href="#" class="dropdown-item" id="profileBtn"><i data-lucide="user"></i> Profile</a>
+                            <a href="#" class="dropdown-item" id="settingsBtn"><i data-lucide="settings"></i> Settings</a>
+                            <a href="#" class="dropdown-item" id="adminLoginBtn"><i data-lucide="shield"></i> Admin Login</a>
+                            <a href="./index.html" class="dropdown-item" id="logoutBtn"><i data-lucide="log-out"></i> Log out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="overview">Overview</button>
+                <button class="tab-btn" data-tab="courses">Courses</button>
+                <button class="tab-btn" data-tab="schedule">Schedule</button>
+                <button class="tab-btn" data-tab="grades">Grades</button>
+                <button class="tab-btn" data-tab="admin" id="adminTab" style="display: none;">Admin</button>
+            </div>
+            <div id="tabContent" class="mt-8">
+                <!-- Tab content will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Update Profile</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="profileName">Name:</label>
+                    <input type="text" id="profileName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileAvatar">Avatar:</label>
+                    <input type="file" id="profileAvatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Email:</label>
+                    <input type="email" id="adminEmail" name="adminEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login as Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
